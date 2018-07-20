@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>MEAN_CURD Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Angular JS files-->
+    <script src="./libraries/js/angular.js"></script>
+    <script src="./libraries/js/angular-cookies.js"></script>
+    <script src="./libraries/lib/notification.js"></script>
+    <script src="./libraries/lib/angular-ui-notification.js"></script>
+    <script src="./angular/config.js"></script>
+    <link rel="stylesheet" href="./libraries/angular-ui-notification.min.css">
+
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+
+        .row.content {
+            height: 450px
+        }
+
+        /* Set gray background color and 100% height */
+
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        /* Set black background color, white text and some padding */
+
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+            .row.content {
+                height: auto;
+            }
+        }
+    </style>
+    <style>
+        .loader {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: url('./images/spinner.gif') 50% 50% no-repeat rgb(249, 249, 249);
+        }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(window).load(function () {
+            $(".loader").fadeOut("slow");
+        })
+    </script>
+</head>
+
+<body ng-app="index" ng-controller="indexController">
+    <div class="loader"></div>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="#">Home</a>
+                    </li>
+                </ul>
+                <!-- <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <!-- <div class="col-sm-12 text-left">
+                <h1>Users
+                   
+                </h1>
+                <hr>
+            </div> -->
+            <div class="col-sm-12 text-left">
+
+            </div>
+            <div class="col-sm-12 text-left">
+
+
+                <table class="table table-condensed " style="background-color:lavender;">
+                    <tr style="background-color:lavender;">
+                        <td>
+                            <h2>Add new product</h2>
+                        </td>
+                    </tr>
+
+                    <tr>
+
+                        <th>Product Name</th>
+                        <th>Product Quantity</th>
+                        <th>Price per Quantity</th>
+                        <th>Total Price</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+
+                        <th>
+                            <input type="text" ng-model="product.productName" class="form-control">
+                        </th>
+                        <th>
+                            <input type="number" ng-model="product.quantity" class="form-control">
+                        </th>
+                        <th>
+                            <input type="number" ng-model="product.productPrice" class="form-control">
+                        </th>
+                        <th>
+                            <input type="number" ng-model="product.totalPrice" value="{{product.totalPrice=product.quantity * product.productPrice}}"
+                                class="form-control" disabled>
+                        </th>
+                        <th>
+                            <a type="button" class="btn btn-primary" href=" #" ng-click="create()" style="width:100%;">ADD</a>
+                        </th>
+                    </tr>
+                </table>
+                <p></p>
+                <h2>List of all Products</h2>
+                <p></p>
+                <table class="table table-condensed pull-left" style="background-color:#92cec1ad ; width:50%;">
+                    <tr>
+                        <th style="width:25%;">Product ID</th>
+                        <th style="width:25%;">Product Name</th>
+                    </tr>
+                    <tr ng-repeat="product in products ">
+                        <td style="width:25%;color:white;">
+                            <a href="#" style="color:black;" ng-click="getDetails(product.id)">{{product.id}}</a>
+                        </td>
+                        <td style="width:25%;color:white;">
+                            <a href="#" style="color:black;" ng-click="getDetails(product.id)">{{product.productName}}</a>
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-condensed pull-left" style="background-color:#3f8196ad;width:50%;">
+                    <tr>
+                        <th style="width:75%;">Product Details</th>
+                    </tr>
+                    <tr>
+                        <td ng-if="myProductDetails != null">
+                            <table class="table ">
+                                <tr>
+                                    <td>
+                                        <a>Product Name</a>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        {{myProductDetails.productName}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <a>Product Quantity</a>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        {{myProductDetails.quantity}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <a>Product price per quantity</a>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        {{myProductDetails.productPrice}}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <a>Total Price</a>
+                                    </td>
+                                    <td>:</td>
+                                    <td>
+                                        {{myProductDetails.totalPrice}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- User register Modal -->
+
+    <!-- Angular JS -->
+    <script src="./angular/index.js"></script>
+</body>
+
+</html>

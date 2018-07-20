@@ -1,0 +1,19 @@
+{
+  "name": "reading_and_writing_json_file_using_nodejs",
+  "version": "1.0.0",
+  "description": "Reading_and_writing_json_file_using_nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Rajesh",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "path": "^0.12.7"
+  }
+}
