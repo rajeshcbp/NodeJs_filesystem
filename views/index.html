@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>MEAN_CURD Example</title>
+    <title>Products</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -15,6 +15,12 @@
     <script src="./libraries/lib/angular-ui-notification.js"></script>
     <script src="./angular/config.js"></script>
     <link rel="stylesheet" href="./libraries/angular-ui-notification.min.css">
+    <style>
+        .responsive {
+            width: 224px;
+            height: 168px;
+        }
+    </style>
 
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
@@ -123,51 +129,63 @@
             </div>
             <div class="col-sm-12 text-left">
 
+                <form name="images" action="{{'/AddData' + '/'+ productName + '/'+ quantity + '/'+ productPrice + '/'+ totalPrice}}" enctype="multipart/form-data"
+                    method="post">
+                    <table class="table table-condensed " style="background-color:lavender;">
+                        <tr style="background-color:lavender;">
+                            <td>
+                                <h2>Add new product</h2>
+                            </td>
+                        </tr>
 
-                <table class="table table-condensed " style="background-color:lavender;">
-                    <tr style="background-color:lavender;">
-                        <td>
-                            <h2>Add new product</h2>
-                        </td>
-                    </tr>
+                        <tr>
 
-                    <tr>
+                            <th>Product Name</th>
+                            <th>Product Quantity</th>
+                            <th>Price per Quantity</th>
+                            <th>Total Price</th>
+                            <th>Upload image</th>
+                            <th>Action</th>
+                        </tr>
 
-                        <th>Product Name</th>
-                        <th>Product Quantity</th>
-                        <th>Price per Quantity</th>
-                        <th>Total Price</th>
-                        <th>Action</th>
-                    </tr>
-                    <tr>
+                        <tr>
 
-                        <th>
-                            <input type="text" ng-model="product.productName" class="form-control">
-                        </th>
-                        <th>
-                            <input type="number" ng-model="product.quantity" class="form-control">
-                        </th>
-                        <th>
-                            <input type="number" ng-model="product.productPrice" class="form-control">
-                        </th>
-                        <th>
-                            <input type="number" ng-model="product.totalPrice" value="{{product.totalPrice=product.quantity * product.productPrice}}"
-                                class="form-control" disabled>
-                        </th>
-                        <th>
-                            <a type="button" class="btn btn-primary" href=" #" ng-click="create()" style="width:100%;">ADD</a>
-                        </th>
-                    </tr>
-                </table>
+                            <th>
+                                <input type="text" ng-model="productName" class="form-control">
+                            </th>
+                            <th>
+                                <input type="number" ng-model="quantity" class="form-control">
+                            </th>
+                            <th>
+                                <input type="number" ng-model="productPrice" class="form-control">
+                            </th>
+                            <th>
+                                <input type="number" ng-model="totalPrice" value="{{totalPrice=quantity * productPrice}}" class="form-control" disabled>
+                            </th>
+                            <th>
+                                <input type="file" class="btn btn-default" name='images' style="width:100%;">
+                            </th>
+                            <th>
+
+                                <input type="submit" value="ADD" class="btn btn-primary " style="width:100%;" />
+                            </th>
+                        </tr>
+
+                    </table>
+                </form>
                 <p></p>
                 <h2>List of all Products</h2>
                 <p></p>
                 <table class="table table-condensed pull-left" style="background-color:#92cec1ad ; width:50%;">
                     <tr>
+                        <th style="width:25%;">Sl no</th>
                         <th style="width:25%;">Product ID</th>
                         <th style="width:25%;">Product Name</th>
                     </tr>
                     <tr ng-repeat="product in products ">
+                        <td style="width:25%;color:white;">
+                            <a href="#" style="color:black;" ng-click="getDetails(product.id)">{{$index + 1}}</a>
+                        </td>
                         <td style="width:25%;color:white;">
                             <a href="#" style="color:black;" ng-click="getDetails(product.id)">{{product.id}}</a>
                         </td>
@@ -176,9 +194,9 @@
                         </td>
                     </tr>
                 </table>
-                <table class="table table-condensed pull-left" style="background-color:#3f8196ad;width:50%;">
+                <table class="table table-condensed pull-left" style="background-color:#3f8196ad;width:25%;">
                     <tr>
-                        <th style="width:75%;">Product Details</th>
+                        <th style="width:25%;">Product Details</th>
                     </tr>
                     <tr>
                         <td ng-if="myProductDetails != null">
@@ -223,6 +241,17 @@
                                     </td>
                                 </tr>
                             </table>
+
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-condensed pull-left" style="background-color:#3f8196ad;width:25%;text-align:center;">
+                    <tr>
+                        <th style="width:25%;">Product Image</th>
+                    </tr>
+                    <tr>
+                        <td ng-if="myProductDetails != null" style="text-align:center;">
+                            <img ng-src="{{myProductDetails.image}}" class="responsive">
                         </td>
                     </tr>
                 </table>

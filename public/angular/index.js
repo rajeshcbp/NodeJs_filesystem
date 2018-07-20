@@ -5,10 +5,7 @@ var url = "";
 
 app.factory('indexFactory', function ($http, $window) {
     return {
-        createNewUser: function (userData) {
-            url = baseAddress + "AddData";
-            return $http.post(url, userData);
-        },
+        
         getAllUserDetails: function () {
             url = baseAddress + "GetAllData";
             return $http.get(url);
@@ -45,27 +42,7 @@ app.controller('indexController', function ($scope, $http, indexFactory, $cookie
 
    
 
-    // Create an user
-    $scope.create = function () {
-        $scope.userData = this.product;
-        console.log("$scope.userData =", $scope.userData);
-        indexFactory.createNewUser($scope.userData).success(function (data) {
-            if (data) {
-                //$window.location.reload();
-                $scope.getAdmin();
-            } else {
-
-                console.log("errorMessage =", $scope.errorMessage);
-            }
-        }).error(function (data) {
-            Notification.error({
-                message: userData.name + ' ' + ',userProfile Adding Failed ',
-                delay: 1000
-            });
-            //$scope.error = "An Error has occured while Adding userProfile! " + data.ExceptionMessage;
-        });
-        //End of signup api invoke    
-    };
+    
 
     // Get single user details
     $scope.getDetails = function (Id) {
